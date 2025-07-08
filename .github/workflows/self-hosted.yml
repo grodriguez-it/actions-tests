@@ -17,7 +17,7 @@ jobs:
         # Asume que tu runner tiene 'sudo' y 'apt' (para Ubuntu/Debian).
         run: |
           sudo apt update
-          sudo apt install git -y
+          sudo apt install git -y # Instala Git en el Runner Local
         shell: bash
 
       - name: Configurar directorio y clonar/actualizar repositorio
