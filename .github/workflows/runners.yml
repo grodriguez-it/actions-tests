@@ -11,6 +11,7 @@ jobs:
         with:
           node-version: '14'
       - run: npm help
+      
   Run-PSScriptAnalyzer-on-Windows:
     name: Run PSScriptAnalyzer on Windows
     runs-on: windows-latest
