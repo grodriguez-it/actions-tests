@@ -36,14 +36,13 @@ jobs:
           else
             echo "El repositorio no existe en el directorio 'Repo-Runner'. Clonando el branch actual..."
             # Clona solo la rama actual en el directorio actual
-            git clone --branch ${{ github.ref_name }} --single-branch \
-              ${{ github.server_url }}/${{ github.repository }}.git .
+            git clone --branch ${{ github.ref_name }} ${{ github.server_url }}/${{ github.repository }}.git .
           fi
         shell: bash
 
       - name: Verificar estado del repositorio (opcional)
         run: |
-          cd ${{ github.workspace }}/github
+          cd Repo-Runner
           git branch
         shell: bash
 
