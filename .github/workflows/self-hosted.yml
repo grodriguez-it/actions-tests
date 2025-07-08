@@ -1,10 +1,10 @@
 name: Gestión Repo en gha-lnx
 
 on:
-  push:
-    branches:
-      - main # Se disparará cuando haya un push a la rama 'main'
-      - stage # También se disparará para la rama 'stage'
+#  push:
+ #   branches:
+  #    - main # Se disparará cuando haya un push a la rama 'main'
+   #   - stage # También se disparará para la rama 'stage'
   workflow_dispatch: # Permite ejecutar el workflow manualmente desde la interfaz de GitHub
 
 jobs:
