@@ -24,20 +24,17 @@ jobs:
         # Este paso creará el directorio 'github' si no existe,
         # y luego clonará o actualizará el repositorio según si ya existe un .git
         run: |
-          # Navega al directorio de trabajo del runner
-          cd ${{ github.workspace }}
-
           # Crea el directorio 'github' si no existe
-          mkdir -p github
-          cd github
+          mkdir -p Repo-Runner
+          cd Repo-Runner
 
           # Comprueba si el directorio .git ya existe
           if [ -d ".git" ]; then
-            echo "El repositorio ya existe en el directorio 'github'. Realizando git pull --rebase..."
+            echo "El repositorio ya existe en el directorio 'Repo-Runner'. Realizando git pull --rebase..."
             # Asegúrate de que el branch sea el correcto para el rebase
             git pull --rebase origin ${{ github.ref_name }}
           else
-            echo "El repositorio no existe en el directorio 'github'. Clonando el branch actual..."
+            echo "El repositorio no existe en el directorio 'Repo-Runner'. Clonando el branch actual..."
             # Clona solo la rama actual en el directorio actual
             git clone --branch ${{ github.ref_name }} --single-branch \
               ${{ github.server_url }}/${{ github.repository }}.git .
@@ -47,8 +44,7 @@ jobs:
       - name: Verificar estado del repositorio (opcional)
         run: |
           cd ${{ github.workspace }}/github
-          git status
-          git log -1 --pretty=format:"%h - %an, %ar : %s"
+          git branch
         shell: bash
 
       # Aquí puedes añadir tus pasos de build/deploy que usarían el código en ${{ github.workspace }}/github
