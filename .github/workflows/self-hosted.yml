@@ -12,13 +12,13 @@ jobs:
     runs-on: gha-lnx # Asegúrate de que 'gha-lnx' sea el nombre exacto o la etiqueta de tu runner
 
     steps:
-      - name: Instalar Git (si no está presente)
-        # Este paso intentará instalar Git. Si ya está instalado, no hará nada o actualizará.
-        # Asume que tu runner tiene 'sudo' y 'apt' (para Ubuntu/Debian).
-        run: |
-          sudo apt update
-          sudo apt install git -y # Instala Git en el Runner Local
-        shell: bash
+    #   - name: Instalar Git (si no está presente)
+    #     # Este paso intentará instalar Git. Si ya está instalado, no hará nada o actualizará.
+    #     # Asume que tu runner tiene 'sudo' y 'apt' (para Ubuntu/Debian).
+    #     run: |
+    #       sudo apt update
+    #       sudo apt install git -y # Instala Git en el Runner Local
+    #     shell: bash
 
       - name: Configurar directorio y clonar/actualizar repositorio
         # Este paso creará el directorio 'github' si no existe,
