@@ -42,7 +42,7 @@ jobs:
 
       - name: Verificar estado del repositorio (opcional)
         run: |
-          cd repo-Runner
+          cd repo-runner
           git branch
         shell: bash
 
