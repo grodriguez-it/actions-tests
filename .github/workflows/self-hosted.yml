@@ -1,0 +1,60 @@
+name: Gestión Repo en gha-lnx
+
+on:
+  push:
+    branches:
+      - main # Se disparará cuando haya un push a la rama 'main'
+      - stage # También se disparará para la rama 'stage'
+  workflow_dispatch: # Permite ejecutar el workflow manualmente desde la interfaz de GitHub
+
+jobs:
+  setup-and-clone:
+    runs-on: gha-lnx # Asegúrate de que 'gha-lnx' sea el nombre exacto o la etiqueta de tu runner
+
+    steps:
+      - name: Instalar Git (si no está presente)
+        # Este paso intentará instalar Git. Si ya está instalado, no hará nada o actualizará.
+        # Asume que tu runner tiene 'sudo' y 'apt' (para Ubuntu/Debian).
+        run: |
+          sudo apt update
+          sudo apt install git -y
+        shell: bash
+
+      - name: Configurar directorio y clonar/actualizar repositorio
+        # Este paso creará el directorio 'github' si no existe,
+        # y luego clonará o actualizará el repositorio según si ya existe un .git
+        run: |
+          # Navega al directorio de trabajo del runner
+          cd ${{ github.workspace }}
+
+          # Crea el directorio 'github' si no existe
+          mkdir -p github
+          cd github
+
+          # Comprueba si el directorio .git ya existe
+          if [ -d ".git" ]; then
+            echo "El repositorio ya existe en el directorio 'github'. Realizando git pull --rebase..."
+            # Asegúrate de que el branch sea el correcto para el rebase
+            git pull --rebase origin ${{ github.ref_name }}
+          else
+            echo "El repositorio no existe en el directorio 'github'. Clonando el branch actual..."
+            # Clona solo la rama actual en el directorio actual
+            git clone --branch ${{ github.ref_name }} --single-branch \
+              ${{ github.server_url }}/${{ github.repository }}.git .
+          fi
+        shell: bash
+
+      - name: Verificar estado del repositorio (opcional)
+        run: |
+          cd ${{ github.workspace }}/github
+          git status
+          git log -1 --pretty=format:"%h - %an, %ar : %s"
+        shell: bash
+
+      # Aquí puedes añadir tus pasos de build/deploy que usarían el código en ${{ github.workspace }}/github
+      # Por ejemplo:
+      # - name: Ejecutar script de despliegue
+      #   run: |
+      #     cd ${{ github.workspace }}/github
+      #     bash deploy2.sh ${{ github.ref_name }}
+      #   shell: bash
