@@ -20,7 +20,6 @@ jobs:
           sudo apt install git -y
         shell: bash
 
-        
       - name: Configurar directorio y clonar/actualizar repositorio
         # Este paso creará el directorio 'github' si no existe,
         # y luego clonará o actualizará el repositorio según si ya existe un .git
